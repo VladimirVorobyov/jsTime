@@ -67,6 +67,7 @@ window.addEventListener('DOMContentLoaded', function(){
         const popup = document.querySelector('.popup'),
               popupBtn = document.querySelectorAll('.popup-btn'),
               popUpClose = document.querySelector('.popup-close'),
+              popupContent = document.querySelector('.popup-content'),
               getClick = function() {
                 popup.style.display =  'block';
                 let start = Date.now();
@@ -74,9 +75,9 @@ window.addEventListener('DOMContentLoaded', function(){
                 let timer = setInterval(function() {
                   let timePassed = Date.now() - start;
           
-                  popup.style.left = timePassed / 5 + 'px';
+                  popupContent.style.left = timePassed / 5 + 'px';
           
-                  if (timePassed > 5000){
+                  if (timePassed > 2500){
                     clearInterval(timer);
                   } 
           
@@ -85,19 +86,62 @@ window.addEventListener('DOMContentLoaded', function(){
 
         if(screen.width > 768){
             popupBtn.forEach((elem) => elem.addEventListener('click', getClick));
-            popUpClose.addEventListener('click', () => {
-                popup.style.display =  'none';
+            popup.addEventListener('click', (event) => {
+                let target = event.target;
+                if(target.classList.contains('popup-close')){
+                    popup.style.display = 'none';
+                } else{
+                    target =target.closest('.popup-content');
+                    if(!target){
+                      popup.style.display = 'none';
+                    }
+                }
             });
             
         } else {
             popupBtn.forEach((elem) => elem.addEventListener('click', () => {
                 popup.style.display =  'block';
             }));
-            popUpClose.addEventListener('click', () => {
-                popup.style.display =  'none';
+            popUpClose.addEventListener('click',()=>{
+                popup.style.display = 'none';
+
             });
         }
         
     };
     togglePopUp();
+    //табы
+    const tabs = () => {
+        const tabHeader = document.querySelector('.service-header'),
+            tab = tabHeader.querySelectorAll('.service-header-tab'),
+            tabContent = document.querySelectorAll('.service-tab');
+
+        const toggleTabContent = (index) => {
+            for(let i = 0; i < tabContent.length; i++){
+                if(index === i){
+                    tab[i].classList.add('active');
+                    tabContent[i].classList.remove('d-none');
+                } else {
+                    tab[i].classList.remove('active');
+                    tabContent[i].classList.add('d-none');
+                }
+            }
+        };
+
+            tabHeader.addEventListener('click', (event) => {
+                let target = event.target;
+                   target = target.closest('.service-header-tab');
+                    if(target.classList.contains('service-header-tab')){
+                        tab.forEach((item, i) => {
+                            if(item === target){
+                                toggleTabContent(i);
+                            }
+                        });
+
+        
+                }
+              
+            });
+    };
+    tabs();
 });
