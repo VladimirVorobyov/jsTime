@@ -49,16 +49,14 @@ window.addEventListener('DOMContentLoaded', function(){
               menu = document.querySelector('menu'),
               closeBtn = document.querySelector('.close-btn'),
               menuItems = menu.querySelectorAll('ul>li');
-        const handlerMenu = () => {
-                if(!menu.style.transform || menu.style.transform === `translate(-100%)`){
-                    menu.style.transform = `translate(0)`;
-                } else {
-                    menu.style.transform = `translate(-100%)`;
-                }
-        };      
-        btnMenu.addEventListener('click', handlerMenu);
-        closeBtn.addEventListener('click', handlerMenu);
-        menuItems.forEach((elem) => elem.addEventListener('click', handlerMenu));
+document.addEventListener('click', (event)=>{
+    if (event.target.closest('.menu')){
+        menu.classList.add('active-menu');
+    }else if (event.target.matches('.close-btn') || event.target.closest('li>a') || !event.target.closest('menu')){
+        menu.classList.remove('active-menu');
+    }
+});
+       
     };
     toggleMenu();
 
