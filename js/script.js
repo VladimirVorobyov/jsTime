@@ -65,8 +65,7 @@ handlerList(){
     this.todoList.addEventListener('click', (e) => {
 
 if(e.target.closest('.todo-remove')){
- let wowa =e.target.closest('.todo-remove');
- delete wowa;
+ 
 }
     }); 
 }
